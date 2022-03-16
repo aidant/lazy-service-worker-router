@@ -1,12 +1,7 @@
 export type Method = 'OPTIONS' | 'GET' | 'HEAD' | 'PUT' | 'POST' | 'DELETE' | 'PATCH'
-
-export interface Context {
-  parameters: Record<string, string>
-}
-
-export type Handler<T> = (request: Request, context: Context) => Promise<Response> | null
-
-export type Handlers = Record<`${Method} /${string}`, Handler<unknown>>
+export type Properties = Record<string, string>
+export type Handler = (request: Request, properties: Properties) => Promise<Response>
+export type Handlers = Record<`${Method} /${string}`, Handler>
 
 export const router = <H extends Handlers>(
   origin: string,
@@ -18,8 +13,10 @@ export const router = <H extends Handlers>(
 
     if (request.method !== method) continue
     // @ts-expect-error URLPattern does not yet have types.
-    const matched = new URLPattern(pattern, origin).test(request.url)
+    const matched = new URLPattern(pattern, origin).exec(request.url)
     if (!matched) continue
+
+    const handler = handlers[key] as unknown as Handler
     const parameters = Object.freeze(
       Object.assign(
         Object.create(null),
@@ -33,13 +30,7 @@ export const router = <H extends Handlers>(
         matched.hash.groups
       )
     )
-
-    const handler = handlers[key] as unknown as Handler<unknown>
-    const response = handler(request, {
-      parameters,
-    })
-    if (!response) continue
-    return response
+    return handler(request, parameters)
   }
 
   return null
@@ -59,16 +50,21 @@ export const response = (
   })
 }
 
-export const registerRouter = (origin: string, handlers: Handlers) => {
+export const registerRouter = (origin: string, handlers: Handlers): (() => void) => {
   /*
     TypeScript for whatever reason does not seem to have a dedicated service 
     worker lib, so in order to have the correct typings (which is already in
     the typescript libs), we need to do this weird ass workaround.
   */
   const addEventListener: ServiceWorkerGlobalScope['addEventListener'] = self.addEventListener
+  const removeEventListener: ServiceWorkerGlobalScope['removeEventListener'] =
+    self.removeEventListener
 
-  addEventListener('fetch', (event) => {
+  const listener = (event: FetchEvent) => {
     const response = router(origin, handlers, event.request)
     if (response) event.respondWith(response)
-  })
+  }
+
+  addEventListener('fetch', listener)
+  return () => removeEventListener('fetch', listener)
 }

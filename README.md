@@ -33,9 +33,7 @@ registerRouter('https://api.example.com/api/v1/', {
   async 'GET /users'() {
     return response({ users: ['dfce5716-c722-4502-beb6-cfc52a6ef9f5'] })
   },
-  async 'GET /users/:userId'(request, context) {
-    const { userId } = context.parameters
-
+  async 'GET /users/:userId'(request, { userId }) {
     if (userId === 'dfce5716-c722-4502-beb6-cfc52a6ef9f5') {
       return response({ id: userId, username: 'Example' })
     }
@@ -49,36 +47,38 @@ registerRouter('https://api.example.com/api/v1/', {
 
 ### `registerRouter`
 
-The [`registerRouter`] function allows you to very easily create a small API in a service worker.
+
 
 #### Parameters
 
-- `origin` - **string** - .
-- `handlers` - **object** - .
+- `origin` - **string** - 
+- `handlers` - **object** - 
 
 #### Example
 
 ```ts
 import { registerRouter, response } from '@lazy/web-router'
 
-registerRouter('https://api.example.com/api/v1/', {
+const deregister = registerRouter('https://api.example.com/api/v1/', {
   async 'GET /'() {
     return response({})
   },
 })
+
+deregister()
 ```
 
-Returns `void`
+Returns `() => void`
 
 ### `response`
 
-The [`response`] function
+
 
 #### Parameters
 
-- `body` - **object** - .
-- `status` - **number** - .
-- `headers` - **object** - .
+- `body` - **object** - 
+- `status` - **number** - 
+- `headers` - **object** - 
 
 #### Example
 
@@ -92,13 +92,13 @@ Returns `Response`
 
 ### `router`
 
-The [`router`] function .
+
 
 #### Parameters
 
-- `origin` - **string** - .
-- `handlers` - **object** - .
-- `request` - **Request** - .
+- `origin` - **string** - 
+- `handlers` - **object** - 
+- `request` - **Request** - 
 
 #### Example
 
