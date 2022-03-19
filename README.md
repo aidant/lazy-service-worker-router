@@ -47,12 +47,12 @@ registerRouter('https://api.example.com/api/v1/', {
 
 ### `registerRouter`
 
-
+Register the router to handle requests in a Service Worker.
 
 #### Parameters
 
-- `origin` - **string** - 
-- `handlers` - **object** - 
+- `origin` - **string** - The origin of the requests to intercept.
+- `handlers` - **object** - An object of function to handle each request.
 
 #### Example
 
@@ -72,13 +72,13 @@ Returns `() => void`
 
 ### `response`
 
-
+Create a `Response` object with some sensible defaults.
 
 #### Parameters
 
-- `body` - **object** - 
-- `status` - **number** - 
-- `headers` - **object** - 
+- `body` - **object** - An object to respond with.
+- `status` - **number** - The status code for the response.
+- `headers` - **object** - The headers for the response.
 
 #### Example
 
@@ -92,13 +92,13 @@ Returns `Response`
 
 ### `router`
 
-
+Route an indivudual request to the respecitve handler.
 
 #### Parameters
 
-- `origin` - **string** - 
-- `handlers` - **object** - 
-- `request` - **Request** - 
+- `origin` - **string** - The origin of the requests to intercept.
+- `handlers` - **object** - An object of function to handle each request.
+- `request` - **Request** - The request to route.
 
 #### Example
 
