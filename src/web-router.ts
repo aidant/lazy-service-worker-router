@@ -13,7 +13,7 @@ export const router = <H extends Handlers>(
 
     if (request.method !== method) continue
     // @ts-expect-error URLPattern does not yet have types.
-    const matched = new URLPattern(pattern, origin).exec(request.url)
+    const matched = new URLPattern('.' + pattern, origin).exec(request.url)
     if (!matched) continue
 
     const handler = handlers[key] as unknown as Handler
