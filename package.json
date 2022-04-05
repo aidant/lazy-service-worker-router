@@ -1,6 +1,6 @@
 {
   "name": "@lazy/web-router",
-  "version": "1.0.0-rc.2",
+  "version": "1.0.0-rc.3",
   "description": "A simple web router for the lazy developer.",
   "license": "MIT",
   "private": false,
