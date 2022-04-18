@@ -1,3 +1,6 @@
+declare var addEventListener: ServiceWorkerGlobalScope['addEventListener']
+declare var removeEventListener: ServiceWorkerGlobalScope['removeEventListener']
+
 export type Method = 'OPTIONS' | 'GET' | 'HEAD' | 'PUT' | 'POST' | 'DELETE' | 'PATCH'
 export type Properties = Record<string, string>
 export type Handler = (request: Request, properties: Properties) => Promise<Response>
@@ -50,16 +53,7 @@ export const response = (
   })
 }
 
-export const registerRouter = (origin: string, handlers: Handlers): (() => void) => {
-  /*
-    TypeScript for whatever reason does not seem to have a dedicated service 
-    worker lib, so in order to have the correct typings (which is already in
-    the typescript libs), we need to do this weird ass workaround.
-  */
-  const addEventListener: ServiceWorkerGlobalScope['addEventListener'] = self.addEventListener
-  const removeEventListener: ServiceWorkerGlobalScope['removeEventListener'] =
-    self.removeEventListener
-
+export const addRouter = (origin: string, handlers: Handlers): (() => void) => {
   const listener = (event: FetchEvent) => {
     const response = router(origin, handlers, event.request)
     if (response) event.respondWith(response)

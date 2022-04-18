@@ -1,26 +1,26 @@
 {
-  "name": "@lazy/web-router",
-  "version": "1.0.0-rc.3",
-  "description": "A simple web router for the lazy developer.",
+  "name": "@lazy/service-worker-router",
+  "version": "1.0.0-rc.1",
+  "description": "A simple Service Worker router for the lazy developer.",
   "license": "MIT",
   "private": false,
   "repository": {
     "type": "git",
-    "url": "https://github.com/aidant/web-router.git"
+    "url": "https://github.com/aidant/lazy-service-worker-router.git"
   },
   "bugs": {
-    "url": "https://github.com/aidant/web-router/issues"
+    "url": "https://github.com/aidant/lazy-service-worker-router/issues"
   },
-  "homepage": "https://github.com/aidant/web-router#readme",
+  "homepage": "https://github.com/aidant/lazy-service-worker-router#readme",
   "keywords": [
-    "web",
+    "api",
     "router",
     "service",
     "worker"
   ],
-  "main": "./lib/web-router.js",
-  "exports": "./lib/web-router.js",
+  "main": "./lib/service-worker-router.js",
+  "exports": "./lib/service-worker-router.js",
   "sideEffects": false,
   "type": "module",
-  "types": "./lib/web-router.d.ts"
+  "types": "./lib/service-worker-router.d.ts"
 }

@@ -30,7 +30,7 @@ jobs:
 
       - name: NPM Pre-Publish Checks
         run: |
-          node -p "'IS_PUBLISHED=' + $(npm view @lazy/web-router versions --json 2>/dev/null || echo "[]").includes(require('./package.json').version)" >> $GITHUB_ENV
+          node -p "'IS_PUBLISHED=' + $(npm view @lazy/service-worker-router versions --json 2>/dev/null || echo "[]").includes(require('./package.json').version)" >> $GITHUB_ENV
 
       - name: NPM Publish
         if: ${{ env.IS_PUBLISHED == 'false' }}

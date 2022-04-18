@@ -1,16 +1,16 @@
-# Lazy Web Router
+# Lazy Service Worker Router
 
 <p align='center'>
-  A simple web router for the lazy developer.
+  A simple Service Worker router for the lazy developer.
   <br>
-  <a href='https://www.npmjs.com/package/@lazy/web-router'>
-    <img src="https://img.shields.io/npm/v/@lazy/web-router?style=flat-square">
+  <a href='https://www.npmjs.com/package/@lazy/service-worker-router'>
+    <img src="https://img.shields.io/npm/v/@lazy/service-worker-router?style=flat-square">
   </a>
-  <a href='https://bundlephobia.com/package/@lazy/web-router'>
-    <img src="https://img.shields.io/bundlephobia/minzip/@lazy/web-router?label=minified%20%26%20gzipped&style=flat-square">
+  <a href='https://bundlephobia.com/package/@lazy/service-worker-router'>
+    <img src="https://img.shields.io/bundlephobia/minzip/@lazy/service-worker-router?label=minified%20%26%20gzipped&style=flat-square">
   </a>
-  <a href='https://github.com/aidant/implicit-grant/actions/workflows/publish.yml'>
-    <img src="https://img.shields.io/github/workflow/status/aidant/implicit-grant/Publish?style=flat-square">
+  <a href='https://github.com/aidant/lazy-service-worker-router/actions/workflows/publish.yml'>
+    <img src="https://img.shields.io/github/workflow/status/aidant/lazy-service-worker-router/Publish?style=flat-square">
   </a>
 </p>
 
@@ -20,16 +20,16 @@
 
 - [Example](#example)
 - [API](#api)
-  - [`registerRouter`]
+  - [`addRouter`]
   - [`response`]
   - [`router`]
 
 ## Example
 
 ```ts
-import { registerRouter, response } from '@lazy/web-router'
+import { addRouter, response } from '@lazy/service-worker-router'
 
-registerRouter('https://api.example.com/api/v1/', {
+addRouter('https://api.example.com/api/v1/', {
   async 'GET /users'() {
     return response({ users: ['dfce5716-c722-4502-beb6-cfc52a6ef9f5'] })
   },
@@ -45,7 +45,7 @@ registerRouter('https://api.example.com/api/v1/', {
 
 ## API
 
-### `registerRouter`
+### `addRouter`
 
 Register the router to handle requests in a Service Worker.
 
@@ -57,15 +57,15 @@ Register the router to handle requests in a Service Worker.
 #### Example
 
 ```ts
-import { registerRouter, response } from '@lazy/web-router'
+import { addRouter, response } from '@lazy/service-worker-router'
 
-const deregister = registerRouter('https://api.example.com/api/v1/', {
+const removeRouter = addRouter('https://api.example.com/api/v1/', {
   async 'GET /'() {
     return response({})
   },
 })
 
-deregister()
+removeRouter()
 ```
 
 Returns `() => void`
@@ -83,7 +83,7 @@ Create a `Response` object with some sensible defaults.
 #### Example
 
 ```ts
-import { response } from '@lazy/web-router'
+import { response } from '@lazy/service-worker-router'
 
 const r404 = response({}, 404)
 ```
@@ -103,7 +103,7 @@ Route an indivudual request to the respecitve handler.
 #### Example
 
 ```ts
-import { router, response } from '@lazy/web-router'
+import { router, response } from '@lazy/service-worker-router'
 
 const res = router(
   'https://api.example.com/api/v1/',
@@ -118,6 +118,6 @@ const res = router(
 
 Returns `Promise<Response>`
 
-[`registerrouter`]: #registerrouter
+[`addrouter`]: #addrouter
 [`response`]: #response
 [`router`]: #router
